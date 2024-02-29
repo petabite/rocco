@@ -1,0 +1,26 @@
+name: Rocco the README Racoon
+author: petabite
+description: Rocco keeps your Github profile README up to date.
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Generate README
+      shell: bash
+      run: |
+        echo "Generating README for ${USERNAME}..."
+        curl -o README.md https://rocco.isupinthe.cloud/api/readme/$USERNAME
+        echo "Done!"
+      env:
+        USERNAME: ${{ GITHUB_REPOSITORY_OWNER }}
+
+    - name: Push README
+      shell: bash
+      run: |
+        git config user.name "Rocco the README Racoon"
+        git config user.email "rocco@isupinthe.cloud"
+        git add README.md
+        git commit -m "Update README"
+        git push
