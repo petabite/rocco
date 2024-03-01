@@ -14,7 +14,7 @@ runs:
         curl -o README.md "https://rocco.isupinthe.cloud/api/readme/${USERNAME}"
         echo "Done!"
       env:
-        USERNAME: ${{ github.repository_owner	}}
+        USERNAME: ${{ github.repository_owner }}
 
     - name: Push README
       shell: bash
