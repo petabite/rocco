@@ -1,6 +1,6 @@
-name: Rocco the README Racoon
+name: rocco the readme racoon
 author: petabite
-description: Rocco keeps your Github profile README up to date.
+description: rocco keeps your github profile readme up to date.
 runs:
   using: "composite"
   steps:
@@ -19,8 +19,8 @@ runs:
     - name: Push README
       shell: bash
       run: |
-        git config user.name "Rocco the README Racoon"
+        git config user.name "rocco the readme racoon"
         git config user.email "rocco@isupinthe.cloud"
         git add README.md
-        git commit -m "Update README"
+        git commit -m "update readme"
         git push
