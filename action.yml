@@ -11,10 +11,10 @@ runs:
       shell: bash
       run: |
         echo "Generating README for ${USERNAME}..."
-        curl -o README.md https://rocco.isupinthe.cloud/api/readme/$USERNAME
+        curl -o README.md "https://rocco.isupinthe.cloud/api/readme/${USERNAME}"
         echo "Done!"
       env:
-        USERNAME: ${{ env.GITHUB_REPOSITORY_OWNER }}
+        USERNAME: ${{ github.repository_owner	}}
 
     - name: Push README
       shell: bash
