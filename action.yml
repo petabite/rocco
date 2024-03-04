@@ -11,16 +11,25 @@ runs:
       shell: bash
       run: |
         echo "Generating README for ${USERNAME}..."
-        curl -o README.md "https://rocco.isupinthe.cloud/api/readme/${USERNAME}"
-        echo "Done!"
+        RESPONSE=$(curl -sS -w "%{http_code}" -o README.md "https://rocco.isupinthe.cloud/api/readme/${USERNAME}")
+        HTTP_STATUS="${RESPONSE: -3}"
+        if [ "$HTTP_STATUS" != "200" ]; then
+            echo "oops! rocco couldn't generate your readme :("
+            echo
+            echo "error:"
+            cat README.md
+            exit 1
+        fi
+        echo "readme generated!"
       env:
         USERNAME: ${{ github.repository_owner }}
 
     - name: Push README
       shell: bash
       run: |
+        echo "pushing your new readme!"
         git config user.name "rocco the readme racoon"
         git config user.email "rocco@isupinthe.cloud"
         git add README.md
-        git commit -m "update readme"
+        git commit -m "update readme" || true
         git push
